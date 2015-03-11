@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="2.3">
+<jmeterTestPlan version="1.2" properties="2.6" jmeter="2.11 r1554548">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
@@ -16,7 +16,7 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">20</stringProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <longProp name="ThreadGroup.start_time">1281132211000</longProp>
         <longProp name="ThreadGroup.end_time">1281132211000</longProp>
@@ -91,7 +91,7 @@
           <stringProp name="filename">/opt/svn_repos/qa_artifacts/qa-artifacts/app-server/as-5.0.0/jmeter/multiple_aar_upload/aarFileList.csv</stringProp>
           <boolProp name="quotedData">false</boolProp>
           <boolProp name="recycle">true</boolProp>
-          <stringProp name="shareMode">All threads</stringProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
           <boolProp name="stopThread">false</boolProp>
           <stringProp name="variableNames">aafFileNames</stringProp>
         </CSVDataSet>
@@ -126,14 +126,14 @@
             <collectionProp name="Arguments.arguments">
               <elementProp name="username" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                <stringProp name="Argument.value">admin@thika${tenantid}.com</stringProp>
+                <stringProp name="Argument.value">admin</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">username</stringProp>
               </elementProp>
               <elementProp name="password" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                <stringProp name="Argument.value">admin123</stringProp>
+                <stringProp name="Argument.value">admin</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">password</stringProp>
@@ -169,7 +169,7 @@
               </elementProp>
               <elementProp name="item" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                <stringProp name="Argument.value">services_list_menu</stringProp>
+                <stringProp name="Argument.value">webapps_list_menu</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">item</stringProp>
@@ -182,7 +182,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">https</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/t/${tenant.domain}/carbon/service-mgt/index.jsp</stringProp>
+          <stringProp name="HTTPSampler.path">/carbon/webapp-list/index.jsp</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -198,17 +198,17 @@
             <collectionProp name="Arguments.arguments">
               <elementProp name="errorRedirectionPage" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">../carbon/aarservices/index.jsp?region=region1&amp;item=aar_menu</stringProp>
+                <stringProp name="Argument.value">../carbon/webapp-mgt/upload.jsp?region=region1&amp;item=webapps_add_menu</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">errorRedirectionPage</stringProp>
               </elementProp>
-              <elementProp name="serviceHierarchy" elementType="HTTPArgument">
+              <elementProp name="version" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value"></stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                <stringProp name="Argument.name">serviceHierarchy</stringProp>
+                <stringProp name="Argument.name">version</stringProp>
               </elementProp>
             </collectionProp>
           </elementProp>
@@ -218,7 +218,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">https</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/t/${tenant.domain}/fileupload/service</stringProp>
+          <stringProp name="HTTPSampler.path">fileupload/webapp</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -230,7 +230,7 @@
               <elementProp name="${warfile}" elementType="HTTPFileArg">
                 <stringProp name="File.path">${warfile}</stringProp>
                 <stringProp name="File.mimetype">application/octet-stream</stringProp>
-                <stringProp name="File.paramname">aarFilename</stringProp>
+                <stringProp name="File.paramname">warFileName</stringProp>
               </elementProp>
             </collectionProp>
           </elementProp>
@@ -274,10 +274,10 @@
           <stringProp name="439122385">war.name</stringProp>
         </collectionProp>
         <collectionProp name="UserParameters.thread_values">
-          <collectionProp name="-1868838665">
+          <collectionProp name="1239395615">
             <stringProp name="2100729851">eve@eve.com</stringProp>
             <stringProp name="-658935714">evanthika123#</stringProp>
-            <stringProp name="1421778879">/opt/svn_repos/qa_artifacts/qa-artifacts/app-server/as-5.0.0/jmeter/multiple_aar_upload/populate_services/bulk2/${aafFileNames}</stringProp>
+            <stringProp name="2131739761">/home/supun/Builds/git/jmeter-scripts/webapps/CachingWebApp-1.3.0.war</stringProp>
             <stringProp name="1276836105">thika${tenantid}.com</stringProp>
             <stringProp name="-1642206144">${aafFileNames}</stringProp>
           </collectionProp>
