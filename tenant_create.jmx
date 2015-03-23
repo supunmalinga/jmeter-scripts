@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="2.4" jmeter="2.9 r1437961">
+<jmeterTestPlan version="1.2" properties="2.6" jmeter="2.11 r1554548">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
@@ -15,7 +15,7 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="numberOfTenants" elementType="Argument">
             <stringProp name="Argument.name">numberOfTenants</stringProp>
-            <stringProp name="Argument.value">1</stringProp>
+            <stringProp name="Argument.value">10</stringProp>
             <stringProp name="Argument.desc">No of tenants</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
@@ -41,17 +41,17 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="server" elementType="Argument">
             <stringProp name="Argument.name">server</stringProp>
-            <stringProp name="Argument.value">localhost</stringProp>
+            <stringProp name="Argument.value">mgt.appserver.carbon-test.org</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="port" elementType="Argument">
             <stringProp name="Argument.name">port</stringProp>
-            <stringProp name="Argument.value">9763</stringProp>
+            <stringProp name="Argument.value">80</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="sslport" elementType="Argument">
             <stringProp name="Argument.name">sslport</stringProp>
-            <stringProp name="Argument.value">9443</stringProp>
+            <stringProp name="Argument.value">443</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="apinm" elementType="Argument">
@@ -129,6 +129,11 @@
             <stringProp name="Argument.value">Unlimited</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="tenantDomainPrefix" elementType="Argument">
+            <stringProp name="Argument.name">tenantDomainPrefix</stringProp>
+            <stringProp name="Argument.value">caching</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
@@ -157,7 +162,7 @@
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="SoapSampler.URL_DATA">https://${server}:9443/services/AuthenticationAdmin.AuthenticationAdminHttpsSoap11Endpoint/</stringProp>
+          <stringProp name="SoapSampler.URL_DATA">https://${server}:${sslport}/services/AuthenticationAdmin.AuthenticationAdminHttpsSoap11Endpoint/</stringProp>
           <stringProp name="HTTPSamper.xml_data">&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:aut=&quot;http://authentication.services.core.carbon.wso2.org&quot;&gt;
    &lt;soapenv:Header/&gt;
    &lt;soapenv:Body&gt;
@@ -195,13 +200,13 @@
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
-            <stringProp name="SoapSampler.URL_DATA">https://${server}:9443/services/TenantMgtAdminService.TenantMgtAdminServiceHttpsSoap11Endpoint/</stringProp>
+            <stringProp name="SoapSampler.URL_DATA">https://${server}:${sslport}/services/TenantMgtAdminService.TenantMgtAdminServiceHttpsSoap11Endpoint/</stringProp>
             <stringProp name="HTTPSamper.xml_data">&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ser=&quot;http://services.mgt.tenant.carbon.wso2.org&quot;&gt;
    &lt;soapenv:Header/&gt;
    &lt;soapenv:Body&gt;
       &lt;ser:getTenant&gt;
          &lt;!--Optional:--&gt;
-         &lt;ser:tenantDomain&gt;tenantdomain${tenant_number}.com&lt;/ser:tenantDomain&gt;
+         &lt;ser:tenantDomain&gt;${tenantDomainPrefix}${tenant_number}.com&lt;/ser:tenantDomain&gt;
       &lt;/ser:getTenant&gt;
    &lt;/soapenv:Body&gt;
 &lt;/soapenv:Envelope&gt;</stringProp>
@@ -238,7 +243,7 @@
               <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
                 <collectionProp name="Arguments.arguments"/>
               </elementProp>
-              <stringProp name="SoapSampler.URL_DATA">https://${server}:9443/services/TenantMgtAdminService.TenantMgtAdminServiceHttpsSoap11Endpoint/</stringProp>
+              <stringProp name="SoapSampler.URL_DATA">https://${server}:${sslport}/services/TenantMgtAdminService.TenantMgtAdminServiceHttpsSoap11Endpoint/</stringProp>
               <stringProp name="HTTPSamper.xml_data">&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ser=&quot;http://services.mgt.tenant.carbon.wso2.org&quot; xmlns:xsd=&quot;http://beans.common.stratos.carbon.wso2.org/xsd&quot;&gt;
    &lt;soapenv:Header/&gt;
    &lt;soapenv:Body&gt;
@@ -248,19 +253,19 @@
             &lt;!--Optional:--&gt;
             &lt;xsd:active&gt;1&lt;/xsd:active&gt;
             &lt;!--Optional:--&gt;
-            &lt;xsd:admin&gt;${userPrefix}${tenant_number}&lt;/xsd:admin&gt;
+            &lt;xsd:admin&gt;admin&lt;/xsd:admin&gt;
             &lt;!--Optional:--&gt;
-            &lt;xsd:adminPassword&gt;test123&lt;/xsd:adminPassword&gt;
+            &lt;xsd:adminPassword&gt;admin123&lt;/xsd:adminPassword&gt;
             &lt;!--Optional:--&gt;
             &lt;xsd:createdDate&gt;2013-02-22T08:22:54&lt;/xsd:createdDate&gt;
             &lt;!--Optional:--&gt;
-            &lt;xsd:email&gt;ruwany@wso2.com&lt;/xsd:email&gt;
+            &lt;xsd:email&gt;admin@wso2.com&lt;/xsd:email&gt;
             &lt;!--Optional:--&gt;
             &lt;xsd:firstname&gt;User1&lt;/xsd:firstname&gt;
             &lt;!--Optional:--&gt;
             &lt;xsd:lastname&gt;LastName1&lt;/xsd:lastname&gt;
             &lt;!--Optional:--&gt;
-            &lt;xsd:tenantDomain&gt;tenantdomain${tenant_number}.com&lt;/xsd:tenantDomain&gt;
+            &lt;xsd:tenantDomain&gt;${tenantDomainPrefix}${tenant_number}.com&lt;/xsd:tenantDomain&gt;
             &lt;!--Optional:--&gt;
             &lt;xsd:tenantId&gt;0&lt;/xsd:tenantId&gt;
             &lt;!--Optional:--&gt;
@@ -281,7 +286,7 @@
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="SoapSampler.URL_DATA">https://${server}:9443/services/AuthenticationAdmin.AuthenticationAdminHttpsSoap11Endpoint/</stringProp>
+          <stringProp name="SoapSampler.URL_DATA">https://${server}:${sslport}/services/AuthenticationAdmin.AuthenticationAdminHttpsSoap11Endpoint/</stringProp>
           <stringProp name="HTTPSamper.xml_data">&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:aut=&quot;http://authentication.services.core.carbon.wso2.org&quot;&gt;
    &lt;soapenv:Header/&gt;
    &lt;soapenv:Body&gt;
@@ -304,7 +309,7 @@
           </ResponseAssertion>
           <hashTree/>
         </hashTree>
-        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="false">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
             <name>saveConfig</name>
@@ -337,7 +342,7 @@
         </ResultCollector>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="User Creation" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="User Creation" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
