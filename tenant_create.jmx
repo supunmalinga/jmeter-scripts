@@ -131,7 +131,7 @@
           </elementProp>
           <elementProp name="tenantDomainPrefix" elementType="Argument">
             <stringProp name="Argument.name">tenantDomainPrefix</stringProp>
-            <stringProp name="Argument.value">caching</stringProp>
+            <stringProp name="Argument.value">supun</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -259,7 +259,7 @@
             &lt;!--Optional:--&gt;
             &lt;xsd:createdDate&gt;2013-02-22T08:22:54&lt;/xsd:createdDate&gt;
             &lt;!--Optional:--&gt;
-            &lt;xsd:email&gt;admin@wso2.com&lt;/xsd:email&gt;
+            &lt;xsd:email&gt;admin@${tenantDomainPrefix}${tenant_number}.com&lt;/xsd:email&gt;
             &lt;!--Optional:--&gt;
             &lt;xsd:firstname&gt;User1&lt;/xsd:firstname&gt;
             &lt;!--Optional:--&gt;
